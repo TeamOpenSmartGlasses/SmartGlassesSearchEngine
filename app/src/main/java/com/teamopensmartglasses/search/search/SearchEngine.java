@@ -24,9 +24,15 @@ public class SearchEngine {
         restServerComms = new RestServerComms(ctx);
     }
 
-    public void sendQuery(String query) throws JSONException {
+    public void sendQuery(String query)  {
         JSONObject obj = new JSONObject();
-        obj.put(MessageTypes.TEXT_QUERY, query);
+
+        try {
+            obj.put(MessageTypes.TEXT_QUERY, query);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
         sendSearchEngineQuery(obj);
     }
 

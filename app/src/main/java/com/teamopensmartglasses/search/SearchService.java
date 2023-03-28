@@ -63,11 +63,7 @@ public class SearchService extends SmartGlassesAndroidService {
 
         searchEngine = new SearchEngine(this);
 
-        try {
-            searchCommandCallback("Dogs",0);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        searchCommandCallback("Dogs",0);
     }
 
     @Override
@@ -77,7 +73,7 @@ public class SearchService extends SmartGlassesAndroidService {
         super.onDestroy();
     }
 
-    public void searchCommandCallback(String args, long commandTriggeredTime) throws JSONException {
+    public void searchCommandCallback(String args, long commandTriggeredTime) {
         Log.d(TAG,"Search callback called");
         searchEngine.sendQuery(args);
     }
