@@ -1,6 +1,6 @@
-# SmartGlassesDriveAssistant
+# SmartGlassesSearch
 
-This is an example app that displays your vehicle's speed and engine RPM on your smartglasses. It works in conjunction with the [SmartGlassesManager](https://github.com/TeamOpenSmartGlasses/SmartGlassesManager).
+This is an example app that lets you search the web with your smart glasses. It works in conjunction with the [SmartGlassesManager](https://github.com/TeamOpenSmartGlasses/SmartGlassesManager).
 
 ## Installation
 
@@ -10,14 +10,9 @@ This is an example app that displays your vehicle's speed and engine RPM on your
 
 ## Usage
 
-This app gets your vehicle's speed and RPM from a Bluetooth ODB II reader. You can buy one for $13 [here](https://www.amazon.com/dp/B09VXDBL8G?psc=1&ref=ppx_yo2ov_dt_b_product_details), but almost all other ELM327-based ODB II readers should work.
+* Using the [SmartGlassesManager](https://github.com/TeamOpenSmartGlasses/SmartGlassesManager), launch the app by saying:
 
-* Plug the OBD II reader into your vehicle
-
-* Pair it with your phone in your Bluetooth settings
-
-* Launch the app via the [SmartGlassesManager](https://github.com/TeamOpenSmartGlasses/SmartGlassesManager)
-* * (Do this by saying: "Hey computer, drive assistant")
+"Hey computer, search for $somethingCool"
 
 ## Contributing
 
