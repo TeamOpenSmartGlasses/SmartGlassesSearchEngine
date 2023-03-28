@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.teamopensmartglasses.driveassistant'
+    namespace 'com.teamopensmartglasses.search'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.teamopensmartglasses.driveassistant"
+        applicationId "com.teamopensmartglasses.search"
         minSdk 28
         targetSdk 33
         versionCode 1

@@ -15,8 +15,10 @@ import android.util.Log;
 import android.Manifest;
 import android.widget.Toast;
 
+import com.teamopensmartglasses.search.R;
+
 public class MainActivity extends AppCompatActivity {
-    private final String TAG = "DriveAssistantApp_MainActivity";
+    private final String TAG = "SearchApp_MainActivity";
     boolean mBound;
     public SearchService mService;
 
@@ -44,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkPermissions();
+        //checkPermissions();
 
         mBound = false;
-        //startDriveService();
+        startSearchService();
     }
 
     private void checkPermissions(){
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED)
         {
-            startDriveService();
+            startSearchService();
         }
         else
         {
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         //bind to foreground service
-        bindDriveService();
+        bindSearchService();
     }
 
     @Override
@@ -96,25 +98,25 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         //unbind foreground service
-        unbindDriveService();
+        unbindSearchService();
     }
 
-    public void stopDriveService() {
-        unbindDriveService();
+    public void stopSearchService() {
+        unbindSearchService();
         if (!isMyServiceRunning(SearchService.class)) return;
         Intent stopIntent = new Intent(this, SearchService.class);
         stopIntent.setAction(SearchService.ACTION_STOP_FOREGROUND_SERVICE);
         startService(stopIntent);
     }
 
-    public void sendDriveServiceMessage(String message) {
+    public void sendSearchServiceMessage(String message) {
         if (!isMyServiceRunning(SearchService.class)) return;
         Intent messageIntent = new Intent(this, SearchService.class);
         messageIntent.setAction(message);
         startService(messageIntent);
     }
 
-    public void startDriveService() {
+    public void startSearchService() {
         if (isMyServiceRunning(SearchService.class)){
             Log.d(TAG, "Not starting service.");
             return;
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         Intent startIntent = new Intent(this, SearchService.class);
         startIntent.setAction(SearchService.ACTION_START_FOREGROUND_SERVICE);
         startService(startIntent);
-        bindDriveService();
+        bindSearchService();
     }
 
     //check if service is running
@@ -137,22 +139,22 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public void bindDriveService(){
+    public void bindSearchService(){
         if (!mBound){
             Intent intent = new Intent(this, SearchService.class);
-            bindService(intent, translationAppServiceConnection, Context.BIND_AUTO_CREATE);
+            bindService(intent, searchAppServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
-    public void unbindDriveService() {
+    public void unbindSearchService() {
         if (mBound){
-            unbindService(translationAppServiceConnection);
+            unbindService(searchAppServiceConnection);
             mBound = false;
         }
     }
 
     /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection translationAppServiceConnection = new ServiceConnection() {
+    private ServiceConnection searchAppServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
