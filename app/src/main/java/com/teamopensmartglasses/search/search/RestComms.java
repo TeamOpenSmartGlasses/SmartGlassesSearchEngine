@@ -1,6 +1,7 @@
 package com.teamopensmartglasses.search.search;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -13,77 +14,62 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 /*
 Adapted from:
 https://github.com/emexlabs/WearableIntelligenceSystem/blob/master/android_smart_phone/main/app/src/main/java/com/wearableintelligencesystem/androidsmartphone/comms/RestServerComms.java
  */
-public class RestServerComms {
-    private String TAG = "WearableAi_ASP_RestServerComms";
+public class RestComms {
+    private String TAG = "SmartGlassesSearch_RestComms";
 
-    private static RestServerComms restServerComms;
+    private static RestComms restComms;
 
     //volley vars
     public RequestQueue mRequestQueue;
     private Context mContext;
     private String serverUrl;
     private int requestTimeoutPeriod = 10000;
+    public static final String KNOWLEDGE_GRAPH_API_KEY = "AIzaSyB4p2qYaHXcaKwuyUNv3Y23iN0HNM4wTXk"; //Pretty please don't abuse this? :)
 
-    //endpoints
-    public static final String NATURAL_LANGUAGE_QUERY_SEND_ENDPOINT = "/natural_language_query";
-    //public static final String FINAL_TRANSCRIPT_SEND_ENDPOINT = "/final_transcript";
-    public static final String FINAL_TRANSCRIPT_SEND_ENDPOINT = "/semantic_search";
-    public static final String VISUAL_SEARCH_QUERY_SEND_ENDPOINT = "/visual_search_search";
-    public static final String SEARCH_ENGINE_QUERY_SEND_ENDPOINT = "/search_engine_search";
-    public static final String MAP_IMAGE_QUERY_SEND_ENDPOINT = "/get_static_map";
-    public static final String TRANSLATE_TEXT_QUERY_ENDPOINT = "/translate_text_simple_query";
-    public static final String REFERENCE_TRANSLATE_ENDPOINT = "/translate_reference_query";
-
-    public static RestServerComms getInstance(Context c){
-        if (restServerComms == null){
-            restServerComms = new RestServerComms(c);
+    public static RestComms getInstance(Context c){
+        if (restComms == null){
+            restComms = new RestComms(c);
         }
-        return restServerComms;
+        return restComms;
     }
 
-    public RestServerComms(Context context) {
-        // Instantiate the RequestQueue.
+    public RestComms(Context context) {
         mContext = context;
         mRequestQueue = Volley.newRequestQueue(mContext);
-//        serverUrl = "https://wis.emexwearables.com/api";
-        serverUrl = "https://wis.emexwearables.com/api";
-//        serverUrl = "http://192.168.76.188:5000";
     }
 
     //handles requesting data, sending data
-    public void restRequest(String endpoint, JSONObject data, VolleyCallback callback){
-        //build the url
-        String builtUrl = serverUrl + endpoint;
+    public void restRequest(String query, VolleyCallback callback) throws JSONException {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("kgsearch.googleapis.com")
+                .appendPath("v1")
+                .appendEncodedPath("entities:search")
+                .appendQueryParameter("limit", "1")
+                .appendQueryParameter("query", query)
+                .appendQueryParameter("key", KNOWLEDGE_GRAPH_API_KEY);
+        String myUrl = builder.build().toString();
 
-        //get the request type
         int requestType = Request.Method.GET;
-        if (data == null){
-            requestType = Request.Method.GET;
-        } else { //there is data to send, send post
-            requestType = Request.Method.POST;
-        }
 
+        JSONObject datas = new JSONObject();
         // Request a json response from the provided URL.
-        JsonObjectRequest request = new JsonObjectRequest(requestType, builtUrl, data,
+        JsonObjectRequest request = new JsonObjectRequest(requestType, myUrl, datas,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d(TAG,"GOT A RESPONSE: " + response.toString());
                         // Display the first 500 characters of the response string.
-//                        Log.d(TAG, "Success requesting data, response:");
-//                        Log.d(TAG, response.toString());
-                        try{
-                            if (response.getBoolean("success")){
+                            if (response.length() != 0){
                                 callback.onSuccess(response);
                             } else{
                                 callback.onFailure();
                             }
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

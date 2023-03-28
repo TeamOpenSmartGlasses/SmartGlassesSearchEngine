@@ -23,10 +23,6 @@ public class SearchService extends SmartGlassesAndroidService {
     static final String appName = "Search";
     public SearchEngine searchEngine;
 
-    final Handler handler = new Handler();
-
-    final int delay = 1000; // 1000 milliseconds == 1 second
-
     //our instance of the SGM library
     public SGMLib sgmLib;
 
@@ -41,6 +37,8 @@ public class SearchService extends SmartGlassesAndroidService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        /* Handle SGMLib specific things */
 
         //Create SGMLib instance with context: this
         sgmLib = new SGMLib(this);
@@ -59,11 +57,11 @@ public class SearchService extends SmartGlassesAndroidService {
 
         Log.d(TAG, "SEARCH SERVICE STARTED");
 
+        /* Handle SmartGlassesSearch specific things */
+
         EventBus.getDefault().register(this);
 
         searchEngine = new SearchEngine(this);
-
-        searchCommandCallback("Dogs",0);
     }
 
     @Override
@@ -75,6 +73,14 @@ public class SearchService extends SmartGlassesAndroidService {
 
     public void searchCommandCallback(String args, long commandTriggeredTime) {
         Log.d(TAG,"Search callback called");
+        Log.d(TAG, "CMDARGS: "+ args);
+        Log.d(TAG, "TIME: " + commandTriggeredTime);
+
+        if(args == "" || args == null){
+            sgmLib.sendReferenceCard(appName, "No search query detected.\nTry again with a seach query.");
+            return;
+        }
+
         searchEngine.sendQuery(args);
     }
 
@@ -85,15 +91,14 @@ public class SearchService extends SmartGlassesAndroidService {
 
     @Subscribe
     public void onSearchResultSuccessDataEvent(SearchResultSuccessDataEvent receivedEvent){
-        JSONObject obj = receivedEvent.result;
-        String result = obj.toString(); //TODO: evaluate
-        Log.d(TAG, result);
-        sgmLib.sendReferenceCard(appName, result);
+        Log.d(TAG,"BODY: " + receivedEvent.title);
+        String title = receivedEvent.title == "" ? appName : receivedEvent.title;
+        sgmLib.sendReferenceCard(title, receivedEvent.body);
     }
 
     @Subscribe
     public void onSearchResultFailureEvent(SearchResultFailureEvent receivedEvent){
-        sgmLib.sendReferenceCard(appName, "Search failed.");
+        sgmLib.sendReferenceCard(appName, "Search failed.\n" + receivedEvent.reason);
     }
 
 }

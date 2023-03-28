@@ -3,8 +3,10 @@ package com.teamopensmartglasses.search.events;
 import org.json.JSONObject;
 
 public class SearchResultSuccessDataEvent {
-    public JSONObject result;
-    public SearchResultSuccessDataEvent(JSONObject res){
-        result = res;
+    public String title;
+    public String body;
+    public SearchResultSuccessDataEvent(String myTitle, String myBody){
+        title = myTitle;
+        body = myBody;
     }
 }
