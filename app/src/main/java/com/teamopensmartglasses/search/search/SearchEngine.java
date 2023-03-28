@@ -17,7 +17,7 @@ https://github.com/emexlabs/WearableIntelligenceSystem/blob/master/android_smart
  */
 
 public class SearchEngine {
-    final public String TAG = "todo";
+    final public String TAG = "SearchApp_SearchEngine";
     private RestServerComms restServerComms;
 
     public SearchEngine(Context ctx){
@@ -57,8 +57,10 @@ public class SearchEngine {
                 }
                 @Override
                 public void onFailure(){
+                    Log.d(TAG, "BIG FAT FAILURE");
                     //asgRep.sendCommandResponse("Search failed, please try again.");
-                    EventBus.getDefault().post(new SearchResultFailureEvent());
+                    //EventBus.getDefault().post(new SearchResultFailureEvent());
+                    EventBus.getDefault().post(new SearchResultSuccessDataEvent(restMessage));
                 }
 
             });

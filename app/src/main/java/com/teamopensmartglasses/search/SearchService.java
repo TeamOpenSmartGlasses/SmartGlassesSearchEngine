@@ -87,6 +87,7 @@ public class SearchService extends SmartGlassesAndroidService {
     public void onSearchResultSuccessDataEvent(SearchResultSuccessDataEvent receivedEvent){
         JSONObject obj = receivedEvent.result;
         String result = obj.toString(); //TODO: evaluate
+        Log.d(TAG, result);
         sgmLib.sendReferenceCard(appName, result);
     }
 
