@@ -11,7 +11,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.teamopensmartglasses.search.events.SearchResultFailureEvent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,6 +47,11 @@ public class RestComms {
 
     //handles requesting data, sending data
     public void restRequest(String query, VolleyCallback callback) throws JSONException {
+        if(query == "" || query == null){
+            EventBus.getDefault().post(new SearchResultFailureEvent("No query"));
+            return;
+        }
+
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
                 .authority("kgsearch.googleapis.com")
