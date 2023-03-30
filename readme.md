@@ -1,6 +1,6 @@
 # SmartGlassesSearch
 
-This is an example app that lets you search the web with your smart glasses. It works in conjunction with the [SmartGlassesManager](https://github.com/TeamOpenSmartGlasses/SmartGlassesManager).
+This is an example app that lets you search Google's knowledge graph with your smart glasses. It works in conjunction with the [SmartGlassesManager](https://github.com/TeamOpenSmartGlasses/SmartGlassesManager).
 
 ## Installation
 
