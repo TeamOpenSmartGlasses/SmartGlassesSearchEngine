@@ -1,4 +1,4 @@
-package com.teamopensmartglasses.search.events;
+package com.teamopensmartglasses.searchengine.events;
 public class SearchResultFailureEvent {
     public String reason;
     public SearchResultFailureEvent(String myReason){

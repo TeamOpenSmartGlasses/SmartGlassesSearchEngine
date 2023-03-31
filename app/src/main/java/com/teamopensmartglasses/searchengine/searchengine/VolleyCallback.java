@@ -1,4 +1,4 @@
-package com.teamopensmartglasses.search.search;
+package com.teamopensmartglasses.searchengine.searchengine;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.teamopensmartglasses.search.search;
+package com.teamopensmartglasses.searchengine.searchengine;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,7 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.teamopensmartglasses.search.events.SearchResultFailureEvent;
+import com.teamopensmartglasses.searchengine.events.SearchResultFailureEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;

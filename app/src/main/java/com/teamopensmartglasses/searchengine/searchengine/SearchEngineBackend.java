@@ -1,10 +1,10 @@
-package com.teamopensmartglasses.search.search;
+package com.teamopensmartglasses.searchengine.searchengine;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.teamopensmartglasses.search.events.SearchResultFailureEvent;
-import com.teamopensmartglasses.search.events.SearchResultSuccessDataEvent;
+import com.teamopensmartglasses.searchengine.events.SearchResultFailureEvent;
+import com.teamopensmartglasses.searchengine.events.SearchResultSuccessDataEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
@@ -16,11 +16,11 @@ Adapted from:
 https://github.com/emexlabs/WearableIntelligenceSystem/blob/master/android_smart_phone/main/app/src/main/java/com/wearableintelligencesystem/androidsmartphone/GLBOXRepresentative.java
  */
 
-public class SearchEngine {
+public class SearchEngineBackend {
     final public String TAG = "SearchApp_SearchEngine";
     private RestComms restComms;
 
-    public SearchEngine(Context ctx){
+    public SearchEngineBackend(Context ctx){
         restComms = new RestComms(ctx);
     }
 

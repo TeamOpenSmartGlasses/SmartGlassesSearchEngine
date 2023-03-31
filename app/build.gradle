@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.teamopensmartglasses.search'
+    namespace 'com.teamopensmartglasses.searchengine'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.teamopensmartglasses.search"
+        applicationId "com.teamopensmartglasses.searchengine"
         minSdk 28
         targetSdk 33
         versionCode 1

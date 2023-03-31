@@ -1,32 +1,31 @@
-package com.teamopensmartglasses.search;
+package com.teamopensmartglasses.searchengine;
 
-import android.os.Handler;
 import android.util.Log;
 
-import com.teamopensmartglasses.search.events.SearchResultFailureEvent;
-import com.teamopensmartglasses.search.events.SearchResultSuccessDataEvent;
-import com.teamopensmartglasses.search.events.SearchResultSuccessEvent;
-import com.teamopensmartglasses.search.search.SearchEngine;
+import com.teamopensmartglasses.searchengine.events.SearchResultFailureEvent;
+import com.teamopensmartglasses.searchengine.events.SearchResultSuccessDataEvent;
+import com.teamopensmartglasses.searchengine.events.SearchResultSuccessEvent;
+import com.teamopensmartglasses.searchengine.searchengine.SearchEngineBackend;
 import com.teamopensmartglasses.sgmlib.SGMCommand;
 import com.teamopensmartglasses.sgmlib.SGMLib;
 import com.teamopensmartglasses.sgmlib.SmartGlassesAndroidService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
-public class SearchService extends SmartGlassesAndroidService {
+public class SearchEngineService extends SmartGlassesAndroidService {
     public final String TAG = "SearchApp_SearchService";
     static final String appName = "Search";
-    public SearchEngine searchEngine;
+    public SearchEngineBackend searchEngineBackend;
 
     //our instance of the SGM library
     public SGMLib sgmLib;
 
-    public SearchService(){
+    public SearchEngineService(){
         super(MainActivity.class,
                 "search_app",
                 1008,
@@ -50,7 +49,7 @@ public class SearchService extends SmartGlassesAndroidService {
         String[] triggerPhrases = new String[]{"search", "search for"};
 
         //Create command object
-        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!");
+        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!", true, "Search query", null);
 
         //Register the command
         sgmLib.registerCommand(command, this::searchCommandCallback);
@@ -61,13 +60,14 @@ public class SearchService extends SmartGlassesAndroidService {
 
         EventBus.getDefault().register(this);
 
-        searchEngine = new SearchEngine(this);
+        searchEngineBackend = new SearchEngineBackend(this);
     }
 
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy called");
         EventBus.getDefault().unregister(this);
+        sgmLib.deinit();
         super.onDestroy();
     }
 
@@ -81,7 +81,7 @@ public class SearchService extends SmartGlassesAndroidService {
             return;
         }
 
-        searchEngine.sendQuery(args);
+        searchEngineBackend.sendQuery(args);
     }
 
     @Subscribe

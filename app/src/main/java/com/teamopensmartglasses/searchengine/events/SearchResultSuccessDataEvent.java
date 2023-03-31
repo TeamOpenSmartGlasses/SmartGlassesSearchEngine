@@ -1,6 +1,4 @@
-package com.teamopensmartglasses.search.events;
-
-import org.json.JSONObject;
+package com.teamopensmartglasses.searchengine.events;
 
 public class SearchResultSuccessDataEvent {
     public String title;

@@ -1,4 +1,4 @@
-package com.teamopensmartglasses.search;
+package com.teamopensmartglasses.searchengine;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.teamopensmartglasses.search;
+package com.teamopensmartglasses.searchengine;
 
 import android.content.Context;
 

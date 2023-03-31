@@ -1,4 +1,4 @@
-package com.teamopensmartglasses.search;
+package com.teamopensmartglasses.searchengine;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -15,12 +15,12 @@ import android.util.Log;
 import android.Manifest;
 import android.widget.Toast;
 
-import com.teamopensmartglasses.search.R;
+import com.teamopensmartglasses.searchengine.R;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "SearchApp_MainActivity";
     boolean mBound;
-    public SearchService mService;
+    public SearchEngineService mService;
 
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -103,27 +103,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void stopSearchService() {
         unbindSearchService();
-        if (!isMyServiceRunning(SearchService.class)) return;
-        Intent stopIntent = new Intent(this, SearchService.class);
-        stopIntent.setAction(SearchService.ACTION_STOP_FOREGROUND_SERVICE);
+        if (!isMyServiceRunning(SearchEngineService.class)) return;
+        Intent stopIntent = new Intent(this, SearchEngineService.class);
+        stopIntent.setAction(SearchEngineService.ACTION_STOP_FOREGROUND_SERVICE);
         startService(stopIntent);
     }
 
     public void sendSearchServiceMessage(String message) {
-        if (!isMyServiceRunning(SearchService.class)) return;
-        Intent messageIntent = new Intent(this, SearchService.class);
+        if (!isMyServiceRunning(SearchEngineService.class)) return;
+        Intent messageIntent = new Intent(this, SearchEngineService.class);
         messageIntent.setAction(message);
         startService(messageIntent);
     }
 
     public void startSearchService() {
-        if (isMyServiceRunning(SearchService.class)){
+        if (isMyServiceRunning(SearchEngineService.class)){
             Log.d(TAG, "Not starting service.");
             return;
         }
         Log.d(TAG, "Starting service.");
-        Intent startIntent = new Intent(this, SearchService.class);
-        startIntent.setAction(SearchService.ACTION_START_FOREGROUND_SERVICE);
+        Intent startIntent = new Intent(this, SearchEngineService.class);
+        startIntent.setAction(SearchEngineService.ACTION_START_FOREGROUND_SERVICE);
         startService(startIntent);
         bindSearchService();
     }
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void bindSearchService(){
         if (!mBound){
-            Intent intent = new Intent(this, SearchService.class);
+            Intent intent = new Intent(this, SearchEngineService.class);
             bindService(intent, searchAppServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            SearchService.LocalBinder sgmLibServiceBinder = (SearchService.LocalBinder) service;
-            mService = (SearchService) sgmLibServiceBinder.getService();
+            SearchEngineService.LocalBinder sgmLibServiceBinder = (SearchEngineService.LocalBinder) service;
+            mService = (SearchEngineService) sgmLibServiceBinder.getService();
             mBound = true;
         }
         @Override
