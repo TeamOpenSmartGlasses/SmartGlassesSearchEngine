@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.teamopensmartglasses.searchengine.R;
 
 public class MainActivity extends AppCompatActivity {
-    private final String TAG = "SearchApp_MainActivity";
+    private final String TAG = "SmartGlassesSearchEngineApp_MainActivity";
     boolean mBound;
     public SearchEngineService mService;
 

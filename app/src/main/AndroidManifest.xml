@@ -26,8 +26,11 @@
         </activity>
 
         <service android:name="com.teamopensmartglasses.searchengine.SearchEngineService"
-            android:exported="true"/>
-
+            android:exported="true">
+            <intent-filter>
+                <action android:name="SGM_COMMAND_INTENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

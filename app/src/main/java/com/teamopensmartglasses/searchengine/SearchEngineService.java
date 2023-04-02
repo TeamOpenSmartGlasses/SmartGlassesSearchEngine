@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class SearchEngineService extends SmartGlassesAndroidService {
-    public final String TAG = "SearchApp_SearchService";
-    static final String appName = "Search";
+    public final String TAG = "SmartGlassesSearchEngineApp_SearchService";
+    static final String appName = "SearchEngine";
     public SearchEngineBackend searchEngineBackend;
 
     //our instance of the SGM library
@@ -27,10 +27,10 @@ public class SearchEngineService extends SmartGlassesAndroidService {
 
     public SearchEngineService(){
         super(MainActivity.class,
-                "search_app",
+                "searchengine_app",
                 1008,
                 appName,
-                "Search for smartglasses", com.google.android.material.R.drawable.notify_panel_notification_icon_bg);
+                "Search engine for smartglasses", com.google.android.material.R.drawable.notify_panel_notification_icon_bg);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SearchEngineService extends SmartGlassesAndroidService {
         String[] triggerPhrases = new String[]{"search", "search for"};
 
         //Create command object
-        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!", true, "Search query", null);
+        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!");//, true, "Search query", null);
 
         //Register the command
         sgmLib.registerCommand(command, this::searchCommandCallback);
