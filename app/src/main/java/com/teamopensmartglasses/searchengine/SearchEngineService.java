@@ -30,7 +30,7 @@ public class SearchEngineService extends SmartGlassesAndroidService {
                 "searchengine_app",
                 1008,
                 appName,
-                "Search engine for smartglasses", com.google.android.material.R.drawable.notify_panel_notification_icon_bg);
+                "Search engine for smartglasses", R.drawable.ic_launcher_foreground);
     }
 
     @Override
@@ -43,13 +43,13 @@ public class SearchEngineService extends SmartGlassesAndroidService {
         sgmLib = new SGMLib(this);
 
         //Define command with a UUID
-        UUID commandUUID = UUID.fromString("5b824bb6-d3b3-417d-8c74-3b103efb4033");
+        UUID commandUUID = UUID.fromString("42b7c8d6-3c61-4e86-9469-e962f2020516");
 
         //Define list of phrases to be used to trigger the command
         String[] triggerPhrases = new String[]{"search", "search for"};
 
         //Create command object
-        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!");//, true, "Search query", null);
+        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!", true, "Search query", null);
 
         //Register the command
         sgmLib.registerCommand(command, this::searchCommandCallback);
