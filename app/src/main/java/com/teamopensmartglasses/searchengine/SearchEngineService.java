@@ -49,7 +49,7 @@ public class SearchEngineService extends SmartGlassesAndroidService {
         String[] triggerPhrases = new String[]{"search", "search for"};
 
         //Create command object
-        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!");//, true, "Search query", null);
+        SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!", true, "Search query", null);
 
         //Register the command
         sgmLib.registerCommand(command, this::searchCommandCallback);
