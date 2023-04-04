@@ -46,7 +46,7 @@ public class SearchEngineService extends SmartGlassesAndroidService {
         UUID commandUUID = UUID.fromString("42b7c8d6-3c61-4e86-9469-e962f2020516");
 
         //Define list of phrases to be used to trigger the command
-        String[] triggerPhrases = new String[]{"search", "search for"};
+        String[] triggerPhrases = new String[]{"search for"};
 
         //Create command object
         SGMCommand command = new SGMCommand(appName, commandUUID, triggerPhrases, "Search the web on smartglasses!", true, "Search query", null);
