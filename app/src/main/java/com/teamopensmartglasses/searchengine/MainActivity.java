@@ -1,24 +1,20 @@
 package com.teamopensmartglasses.searchengine;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.Manifest;
-import android.widget.Toast;
-
-import com.teamopensmartglasses.searchengine.R;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "SmartGlassesSearchEngineApp_MainActivity";
+    Button killServiceButton;
     boolean mBound;
     public SearchEngineService mService;
 
@@ -26,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        killServiceButton = (Button)findViewById(R.id.killServiceButton);
+        killServiceButton.setOnClickListener(
+                v -> stopSearchService());
 
         mBound = false;
         startSearchService();
