@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         killServiceButton = (Button)findViewById(R.id.killServiceButton);
         killServiceButton.setOnClickListener(
-                v -> stopSearchService());
+                v -> stopSearchEngineService());
 
         mBound = false;
-        startSearchService();
+        startSearchEngineService();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         //bind to foreground service
-        bindSearchService();
+        bindSearchEngineService();
     }
 
     @Override
@@ -43,25 +43,25 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         //unbind foreground service
-        unbindSearchService();
+        unbindSearchEngineService();
     }
 
-    public void stopSearchService() {
-        unbindSearchService();
+    public void stopSearchEngineService() {
+        unbindSearchEngineService();
         if (!isMyServiceRunning(SearchEngineService.class)) return;
         Intent stopIntent = new Intent(this, SearchEngineService.class);
         stopIntent.setAction(SearchEngineService.ACTION_STOP_FOREGROUND_SERVICE);
         startService(stopIntent);
     }
 
-    public void sendSearchServiceMessage(String message) {
+    public void sendSearchEngineServiceMessage(String message) {
         if (!isMyServiceRunning(SearchEngineService.class)) return;
         Intent messageIntent = new Intent(this, SearchEngineService.class);
         messageIntent.setAction(message);
         startService(messageIntent);
     }
 
-    public void startSearchService() {
+    public void startSearchEngineService() {
         if (isMyServiceRunning(SearchEngineService.class)){
             Log.d(TAG, "Not starting service.");
             return;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         Intent startIntent = new Intent(this, SearchEngineService.class);
         startIntent.setAction(SearchEngineService.ACTION_START_FOREGROUND_SERVICE);
         startService(startIntent);
-        bindSearchService();
+        bindSearchEngineService();
     }
 
     //check if service is running
@@ -84,14 +84,14 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public void bindSearchService(){
+    public void bindSearchEngineService(){
         if (!mBound){
             Intent intent = new Intent(this, SearchEngineService.class);
             bindService(intent, searchAppServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
-    public void unbindSearchService() {
+    public void unbindSearchEngineService() {
         if (mBound){
             unbindService(searchAppServiceConnection);
             mBound = false;

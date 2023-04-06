@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class SearchEngineService extends SmartGlassesAndroidService {
-    public final String TAG = "SmartGlassesSearchEngineApp_SearchService";
+    public final String TAG = "SmartGlassesSearchEngineApp_SearchEngineService";
     static final String appName = "SearchEngine";
     public SearchEngineBackend searchEngineBackend;
 
