@@ -123,8 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d(TAG, "Starting service.");
         Intent startIntent = new Intent(this, SearchEngineService.class);
-        startIntent.setAction(SearchEngineService.INTENT_ACTION);
-        startIntent.putExtra(SearchEngineService.TPA_ACTION, SearchEngineService.ACTION_START_FOREGROUND_SERVICE);
+        startIntent.setAction(SearchEngineService.ACTION_START_FOREGROUND_SERVICE);
         startService(startIntent);
         bindSearchService();
     }
